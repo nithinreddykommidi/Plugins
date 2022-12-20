@@ -94,6 +94,7 @@
     <Compile Include="CountField.cs" />
     <Compile Include="CountOfEmployees.cs" />
     <Compile Include="CreateTask.cs" />
+    <Compile Include="Crtact.cs" />
     <Compile Include="DescUpper.cs" />
     <Compile Include="DuplicateCheck.cs" />
     <Compile Include="EmailUpdate.cs" />

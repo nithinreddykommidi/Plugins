@@ -50,20 +50,21 @@ namespace Plugin
                         CountOf = account.Attributes["nw_countofemp"].ToString();
                         number = Convert.ToInt32(CountOf);
                         Guid accountId = account.Id;
-                        account.Attributes.Add("description", CountOf);
-
+                        
 
                         for (int i = 0; i < number; i++)
                         {
-                            Entity contact = new Entity();
-                            contact.LogicalName = "contact";
-                            contact["firstname"] = "contact";
+                            Entity newContact = new Entity("contact");
+                            //EntityReference compnany = new EntityReference("account",accountId);
+                            //account.Attributes.Add("description", compnany.Name);
+                           
 
-                            contact["lastname"] = i.ToString();
-                            contact["description"] = accountId.ToString();
-
-                            //contact.Attributes.Add("parentcustomerid",account.ToEntityReference());
-                            service.Create(contact);
+                            newContact["firstname"] = account.Attributes["name"].ToString();
+                            tracingService.Trace(newContact["firstname"].ToString());
+                            newContact["lastname"] = i.ToString();
+                            newContact["parentcustomerid"] = new EntityReference("account", accountId);
+                           // newContact.Attributes.Add("parentcustomerid",);
+                            service.Create(newContact);
 
                         }
 
