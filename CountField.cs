@@ -50,26 +50,53 @@ namespace Plugin
                         CountOf = account.Attributes["nw_countofemp"].ToString();
                         number = Convert.ToInt32(CountOf);
                         Guid accountId = account.Id;
-                        
 
-                        for (int i = 0; i < number; i++)
+                        QueryExpression query = new QueryExpression("contact");
+                        query.ColumnSet = new ColumnSet(new string[] { "parentcustomerid", "firstname", "lastname" });
+                        //query.Criteria.AddCondition(new ConditionExpression("parentcustomerid", ConditionOperator.Equal, accountId));
+                        query.Criteria.AddCondition("parentcustomerid", ConditionOperator.Equal, accountId);
+                        EntityCollection collection = service.RetrieveMultiple(query);
+
+                        int CurrentCts = collection.Entities.Count;
+                        tracingService.Trace(CurrentCts.ToString());
+                        if (CurrentCts == 0)
                         {
-                            Entity newContact = new Entity("contact");
-                            //EntityReference compnany = new EntityReference("account",accountId);
-                            //account.Attributes.Add("description", compnany.Name);
-                           
 
-                            newContact["firstname"] = account.Attributes["name"].ToString();
-                            tracingService.Trace(newContact["firstname"].ToString());
-                            newContact["lastname"] = i.ToString();
-                            newContact["parentcustomerid"] = new EntityReference("account", accountId);
-                           // newContact.Attributes.Add("parentcustomerid",);
-                            service.Create(newContact);
 
+
+                            for (int i = 0; i < number; i++)
+                            {
+                                Entity newContact = new Entity("contact");
+                                //EntityReference compnany = new EntityReference("account",accountId);
+                                //account.Attributes.Add("description", compnany.Name);
+
+
+                                newContact["firstname"] = account.Attributes["name"].ToString();
+                                tracingService.Trace(newContact["firstname"].ToString());
+                                newContact["lastname"] = i.ToString();
+                                newContact["parentcustomerid"] = new EntityReference("account", accountId);
+                                // newContact.Attributes.Add("parentcustomerid",);
+                                service.Create(newContact);
+
+                            }
+                        }
+                        else if(CurrentCts > number)
+                        {
+                            foreach(Entity contact in collection.Entities)
+                            {   
+                                Guid Contact_ID = contact.Id;
+                                string LName = contact["lastname"].ToString();
+                                int lName = Convert.ToInt32(LName);
+                                if (lName > number)
+                                {
+                                    service.Delete("contact",Contact_ID);
+                                }
+
+                            }   
                         }
 
-                    }
-                    // Plug-in business logic goes here.  
+                    }   
+                      
 
                 }
 

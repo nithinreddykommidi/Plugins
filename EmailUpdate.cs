@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Plugin
 {
-    public class EmailUpdate : IPlugin
+    internal class EmailUpdate : IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)
         {
