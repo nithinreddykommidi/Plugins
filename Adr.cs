@@ -93,24 +93,19 @@ namespace Plugin
                             {
                                 throw new InvalidPluginExecutionException("contact already had adress type" + currentType.ToString());
                             }
-                            //int number = Convert.ToInt32(AdrType);
-                            //AdrTypes[i] = AdrType;
-
-                            //AdrTypes[i] == 
-                            //i++;
 
                         }
 
                         else if (AdrType == 4)
                         {
                             others++;
+                            if (others >= 2 && currentType == 4)
+                            {
+                                throw new InvalidPluginExecutionException("contact cannot have more than 2 other addresses");
+                            }
 
                         }
 
-                        if(others >= 2 && currentType == 4)
-                        {
-                           throw new InvalidPluginExecutionException("contact cannot have more than 2 other addresses");
-                        }
 
                         
                        
