@@ -9,7 +9,7 @@ using Microsoft.Xrm.Sdk.Query;
 
 namespace Plugin
 {
-    public class Adr:IPlugin
+    internal class Adr:IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)
         {

@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace Plugin
 {
-    public class CountField: IPlugin
+    internal class CountField: IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)
         {
